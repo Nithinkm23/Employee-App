@@ -2,7 +2,7 @@
 
 const express = require("express")
 const app = new express
-const morgan = require("morgan") 
+const morgan = require("morgan")
 const api = require("./routes/data")
 
 const path = require('path');
@@ -16,28 +16,38 @@ app.listen(PORT, () => {
     console.log(`The server is running on port ${PORT}`);
 })
 
+
+
 // Task2: create mongoDB connection 
 
+const mongoose = require("mongoose")
+mongoose.connect(process.env.mongodb_url)
+    .then(() => {
+        console.log("Conneted to local DB");
+    })
+    .catch(() => {
+        console.log("Error!! Connection lost..");
+    })
 
-require("./db/mongodb")
+
 
 //Task 2 : write api with error handling and appropriate api mentioned in the TODO below
 
 
- 
+
 
 
 
 
 //TODO: get data from db  using api '/api/employeelist'
 
-const EmpData=require('./model/employeeData');
- 
+const EmpData = require('./model/employeeData');
+
 
 //TODO: get single data from db  using api '/api/employeelist/:id'
 
 
- 
+
 
 
 //TODO: send data from db using api '/api/employeelist'
@@ -61,7 +71,7 @@ const EmpData=require('./model/employeeData');
 //! dont delete this code. it connects the front end file.
 app.get('/*', function (req, res) {
     res.sendFile(path.join(__dirname + '/dist/Frontend/index.html'));
-}); 
+});
 
 
 
