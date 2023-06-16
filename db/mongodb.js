@@ -1,8 +1,8 @@
 const mongoose = require("mongoose")
-mongoose.connect("mongodb://127.0.0.1:27017")
+mongoose.connect(process.env.mongodb_url)
     .then(() => {
         console.log("Conneted to local DB");
     })
     .catch(() => {
         console.log("Error!! Connection lost..");
-    })   
+    })    

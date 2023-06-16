@@ -5,5 +5,5 @@ const employeeSchema = mongoose.Schema({
     position: String,
     salary: Number
 })
-const employeeData = mongoose.model('employeeList', employeeSchema)
-module.exports = employeeData; 
+const employeeData = mongoose.model('employeeLists', employeeSchema)
+module.exports = employeeData;  
