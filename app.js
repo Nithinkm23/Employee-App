@@ -47,8 +47,8 @@ app.get("/api", (req, res) => {
 
 
 
-
-
+//ALL THE CRUD OPERATIONS ARE DONE IN THE DATA.JS FILE
+// const api = require("./routes/data")
 
 //TODO: get data from db  using api '/api/employeelist'
 
