@@ -1,14 +1,14 @@
 // Task1: initiate app and run server at 3000
 
 const express = require("express")
-const app = new express
+const app = new express();
 const morgan = require("morgan")
 const api = require("./routes/data")
 
 const path = require('path');
 app.use(express.static(path.join(__dirname + '/dist/FrontEnd')));
 app.use(morgan("dev"))
-app.use("/api", api)
+app.use("/api",api)
 
 require("dotenv").config()
 const PORT = process.env.PORT;
@@ -20,7 +20,8 @@ app.listen(PORT, () => {
 
 // Task2: create mongoDB connection 
 
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
+const { log } = require("console");
 mongoose.connect(process.env.mongodb_url)
     .then(() => {
         console.log("Conneted to local DB");
@@ -33,6 +34,16 @@ mongoose.connect(process.env.mongodb_url)
 
 //Task 2 : write api with error handling and appropriate api mentioned in the TODO below
 
+app.get("/api", (req, res) => {
+    try {
+        console.log(req.body);
+        res.send("welcome")
+    }
+    catch (error) {
+        res.send(error)
+
+    }
+})
 
 
 
@@ -41,7 +52,7 @@ mongoose.connect(process.env.mongodb_url)
 
 //TODO: get data from db  using api '/api/employeelist'
 
-const EmpData = require('./model/employeeData');
+
 
 
 //TODO: get single data from db  using api '/api/employeelist/:id'
