@@ -7,21 +7,24 @@ router.use(express.urlencoded({ extended: true }))
 
 const EmpData = require('../model/employeeData');
 
+
 //TODO: get data from db  using api '/api/employeelist'
 
-router.get("/api/employeelist", async (req, res) => {
+router.get("/employeelist", async (req, res) => {
     try {
         const data = await EmpData.find()
         res.status(200).json(data)
     } catch (error) {
         res.status(400).json("Can't Get Data")
     }
-})
+}) 
 
 //TODO: get single data from db  using api '/api/employeelist/:id'
-router.get("/api/employeelist/:id", async (req, res) => {
+router.get("/employeelist/:id", async (req, res) => {
     try {
         let id = req.params.id;
+        const data = await EmpData.findOne({ _id: id });
+        res.status(200).json(data)
         console.log(id);
     } catch (error) {
         console.log(error);
@@ -36,7 +39,7 @@ router.post('/employeelist', async (req, res) => {
     try {
         const item = req.body;
         const newdata = new EmpData(item);
-        const savedData = await newdata.save();
+        await newdata.save();
         res.status(200).json("Post Success");
     } catch (error) {
         console.log(error);
@@ -47,13 +50,15 @@ router.post('/employeelist', async (req, res) => {
 
 //TODO: Update  a employee data from db by using api '/api/employeelist'
 //Request body format:{name:'',location:'',position:'',salary:''}
-router.put("/api/employeelist", async (req, res) => {
+router.put("/employeelist", async (req, res) => {
     try {
-        let id = req.params.id;
-        console.log("ID check", id);
-        let updateData = { $set: req.body }
-        const updated = await EmpData.findByIdAndUpdate(id, updateData)
-        res.json(updated)
+        let idx=req.body._id;
+           console.log(idx);
+           let updateData={$set:req.body};
+           const updatedPut =await EmpData.findByIdAndUpdate(idx,updateData);
+           res.send(updatedPut);
+           res.status(200);
+        
     } catch (error) {
         console.log(error);
         res.send('Error')
@@ -62,12 +67,12 @@ router.put("/api/employeelist", async (req, res) => {
 
 //TODO: delete a employee data from db by using api '/api/employeelist/:id'
 
-router.delete("/api/employeelist/:id", async (req, res) => {
+router.delete("/employeelist/:id", async (req, res) => {
     try {
         let id = req.params.id;
         console.log("ID check", id);
-        
-        const updated = await EmpData.findByIdAndDelete(id)
+
+        await EmpData.findByIdAndDelete(id)
         res.json("Deleted Successfully")
     } catch (error) {
         console.log(error);
